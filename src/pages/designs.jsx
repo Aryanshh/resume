@@ -14,10 +14,10 @@ export default function DesignCollage() {
     {
       id: 2,
       type: 'video',
-      src: '/designs/motion-1.mp4',
-      poster: '/designs/motion-1-poster.jpg',
+      src: '/designs/graphics/1.jpg',
+      poster: '/designs/graphics/1.jpg',
       title: '3D Product Animation',
-      width: 1920,
+      width: 400,
       height: 1080
     },
     // Add all 60+ items...

@@ -19,9 +19,9 @@ const experiences = [
   },
   {
     icon: <BrainCircuit className="w-6 h-6" />,
-    role: "AI Researcher",
-    company: "NeuralLabs",
-    period: "2021-2022",
+    role: "Tech and Flying Head",
+    company: "Drone Society",
+    period: "2024-2025",
     description: "Developed computer vision models for medical imaging",
     highlights: [
       "Published research paper",
@@ -32,9 +32,9 @@ const experiences = [
   },
   {
     icon: <GitBranch className="w-6 h-6" />,
-    role: "DevOps Engineer",
-    company: "CloudForge",
-    period: "2020-2021",
+    role: "Member",
+    company: "Placom Bennett University",
+    period: "2025-2026",
     description: "Implemented CI/CD pipelines for enterprise clients",
     highlights: [
       "Reduced deployment time by 65%",
@@ -70,7 +70,7 @@ export default function About() {
           <div className="text-lg mb-6">
             <span className="font-semibold text-blue-300">Developer</span> | 
             <span className="font-semibold text-purple-300"> Designer</span> | 
-            <span className="font-semibold text-cyan-300"> Tech Innovator</span>
+            <span className="font-semibold text-cyan-300"> Entrepreneur</span>
           </div>
           <p className="text-gray-300 max-w-2xl mx-auto">
             Passionate about AI, robotics, and creating innovative digital experiences. 
@@ -124,12 +124,13 @@ export default function About() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {[
-              { name: "AI/ML", icon: "🤖", level: 90 },
-              { name: "Web Dev", icon: "🌐", level: 95 },
-              { name: "Robotics", icon: "🤖", level: 85 },
-              { name: "Cloud", icon: "☁️", level: 80 },
-              { name: "UI/UX", icon: "🎨", level: 88 },
-              { name: "DevOps", icon: "⚙️", level: 75 }
+              { name: "AI/ML", icon: "", level: 75 },
+              { name: "Web Dev", icon: "", level: 65 },
+              { name: "Robotics", icon: "", level: 90 },
+              { name: "Cloud", icon: "", level: 80 },
+              { name: "UI/UX", icon: "", level: 70 },
+              { name: "Drones", icon: "", level: 90 },
+              { name: "IoT", icon: "", level: 90 }
             ].map((skill, index) => (
               <motion.div 
                 key={index}

@@ -1,0 +1,44 @@
+🔄 Update & Push Workflow
+Check current changes
+
+bash
+git status
+Stage all modified files
+
+bash
+git add .
+(or specify individual files: git add filename.js)
+
+Commit changes with a message
+
+bash
+git commit -m "Update: Added new projects section"
+Push to GitHub
+
+bash
+git push origin main
+Verify deployment (Vercel will auto-deploy)
+
+bash
+# Check deployment status at:
+# https://vercel.com/your-username/your-project
+⚡ Pro Tips
+For major changes, create a new branch first:
+
+bash
+git checkout -b feature/new-design
+# After committing:
+git push -u origin feature/new-design
+If you get conflicts:
+
+bash
+git pull origin main  # Pull latest changes first
+# Resolve conflicts, then:
+git add .
+git commit -m "Resolved merge conflicts"
+git push
+Undo last commit (if needed):
+
+bash
+git reset HEAD~1
+Your workflow summary:

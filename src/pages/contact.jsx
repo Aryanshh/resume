@@ -6,31 +6,31 @@ export default function Contact() {
   const socialLinks = [
     { 
       icon: <FiMessageSquare className="text-3xl" />, 
-      url: 'https://wa.me/919876543210', 
+      url: 'https://wa.me/919205977372', 
       color: 'from-green-400 to-green-600',
       name: 'WhatsApp'
     },
     { 
       icon: <FiMail className="text-3xl" />, 
-      url: 'mailto:hello@aryanshh.dev', 
+      url: 'mailto:aryanshh08sri@gmail.com', 
       color: 'from-purple-400 to-purple-600',
       name: 'Email'
     },
     { 
       icon: <FiLinkedin className="text-3xl" />, 
-      url: 'https://linkedin.com/in/yourprofile', 
+      url: 'https://www.linkedin.com/in/aryanshh-srivastava-088676146/x', 
       color: 'from-blue-500 to-blue-700',
       name: 'LinkedIn'
     },
     { 
       icon: <FiGithub className="text-3xl" />, 
-      url: 'https://github.com/yourusername', 
+      url: 'https://github.com/Aryanshh', 
       color: 'from-gray-600 to-gray-800',
       name: 'GitHub'
     },
     { 
       icon: <FiTwitter className="text-3xl" />, 
-      url: 'https://twitter.com/yourhandle', 
+      url: 'https://x.com/AryanshhSri', 
       color: 'from-sky-400 to-sky-600',
       name: 'Twitter'
     },

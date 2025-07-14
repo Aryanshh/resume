@@ -1,0 +1,157 @@
+import { useEffect, useRef } from 'react';
+
+export default function Home() {
+  const vantaRef = useRef(null);
+
+  useEffect(() => {
+    const loadScripts = async () => {
+      // Load three.js
+      const threeScript = document.createElement('script');
+      threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js';
+      threeScript.async = true;
+      
+      // Load vanta.cells
+      const vantaScript = document.createElement('script');
+      vantaScript.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.cells.min.js';
+      vantaScript.async = true;
+
+      await new Promise((resolve) => {
+        threeScript.onload = resolve;
+        document.head.appendChild(threeScript);
+      });
+
+      await new Promise((resolve) => {
+        vantaScript.onload = resolve;
+        document.head.appendChild(vantaScript);
+      });
+
+      if (window.VANTA && window.THREE && vantaRef.current) {
+        const effect = window.VANTA.CELLS({
+          el: vantaRef.current,
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.00,
+          minWidth: 200.00,
+          scale: 1.00,
+          color1: 0x1a4760,       // Cell color
+          color2: 0x7158e2,       // Secondary color
+          backgroundColor: 0x18171d, // Background matches your theme
+          size: 1.5,              // Cell size
+          speed: 1.2              // Animation speed
+        });
+
+        return () => {
+          if (effect) effect.destroy();
+        };
+      }
+    };
+
+    loadScripts();
+
+    return () => {};
+  }, []);
+
+  const handleDownloadResume = () => {
+    const resumeUrl = '/resume.pdf';
+    const link = document.createElement('a');
+    link.href = resumeUrl;
+    link.download = 'Aryanshh_Srivastava_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <div>
+      {/* Vanta Cells Background */}
+      <div className="vanta-background" ref={vantaRef}></div>
+
+      {/* Overlay Content - Same as before */}
+      <div className="overlay">
+        <h1 className="gradient-text">Aryanshh Srivastava</h1>
+        <h2 className="subtitle">Developer | Designer | Tech Innovator</h2>
+        <p className="description">
+          Developer and designer passionate about AI, robotics, and creating innovative digital
+          experiences. Currently pursuing Computer Science at Bennett University.
+        </p>
+        <button className="resume-button" onClick={handleDownloadResume}>
+          Download Resume
+        </button>
+      </div>
+
+      {/* Component Styles - Same as before */}
+      <style jsx>{`
+        .vanta-background {
+          position: fixed;
+          width: 100vw;
+          height: 100vh;
+          top: 0;
+          left: 0;
+          z-index: -1;
+        }
+        .overlay {
+          position: relative;
+          z-index: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          text-align: center;
+          padding: 0 20px;
+          color: white;
+          font-family: 'Segoe UI', sans-serif;
+        }
+        .gradient-text {
+          font-size: 3rem;
+          font-weight: 800;
+          background: linear-gradient(to right,rgb(216, 215, 215), #7158e2);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          margin: 0;
+        }
+        .subtitle {
+          font-size: 1.4rem;
+          font-weight: 500;
+          margin-top: 10px;
+        }
+        .description {
+          max-width: 600px;
+          font-size: 1rem;
+          margin-top: 20px;
+          line-height: 1.6;
+        }
+        .resume-button {
+          margin-top: 30px;
+          padding: 12px 30px;
+          font-size: 1rem;
+          font-weight: 600;
+          color: white;
+          background: transparent;
+          border: 2px solid #7158e2;
+          border-radius: 50px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          outline: none;
+        }
+        .resume-button:hover {
+          background: #7158e2;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 15px rgba(113, 88, 226, 0.4);
+        }
+        .resume-button:active {
+          transform: translateY(0);
+        }
+      `}</style>
+
+      {/* Global Style - Same as before */}
+      <style jsx global>{`
+        body {
+          margin: 0;
+          overflow: hidden;
+        }
+      `}</style>
+    </div>
+  );
+}
