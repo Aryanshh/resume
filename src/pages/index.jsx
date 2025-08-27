@@ -1,25 +1,47 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
 
-// Dynamically import Spline with no SSR
-const Spline = dynamic(
-  () => import('@splinetool/react-spline'),
-  { ssr: false, loading: () => <div className="loading-overlay"><div className="loading-spinner"></div></div> }
-);
+// We'll use a different approach since dynamic imports are causing issues
+let Spline;
+if (typeof window !== 'undefined') {
+  // We'll import it only on the client side
+  import('@splinetool/react-spline').then(module => {
+    Spline = module.Spline;
+  });
+}
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [splineLoaded, setSplineLoaded] = useState(false);
 
   useEffect(() => {
     // Check if mobile device
     setIsMobile(window.innerWidth < 768);
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    
+    // Load Spline component
+    if (typeof window !== 'undefined') {
+      import('@splinetool/react-spline').then(module => {
+        Spline = module.Spline;
+        setSplineLoaded(true);
+      }).catch(error => {
+        console.error('Failed to load Spline:', error);
+        setIsLoading(false);
+      });
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
+
+  const handleSplineLoad = () => {
+    console.log('Spline loaded successfully');
+    setIsLoading(false);
+  };
 
   const handleDownloadResume = () => {
     const resumeUrl = '/resume.pdf';
@@ -35,20 +57,23 @@ export default function Home() {
     <div>
       {/* Spline Background */}
       <div className="spline-background">
-        <Spline 
-          scene="https://prod.spline.design/jfAtqFE6Kjlqgh-T/scene.splinecode"
-          onLoad={() => setIsLoading(false)}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            zIndex: -1,
-            opacity: isLoading ? 0 : 1,
-            transition: 'opacity 0.5s ease'
-          }}
-        />
+        {splineLoaded && Spline && (
+          <Spline 
+            scene="https://prod.spline.design/jfAtqFE6Kjlqgh-T/scene.splinecode"
+            onLoad={handleSplineLoad}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              zIndex: -1,
+              opacity: isLoading ? 0 : 1,
+              transition: 'opacity 0.5s ease',
+              visibility: isLoading ? 'hidden' : 'visible'
+            }}
+          />
+        )}
         
         {/* Spline iframe as fallback */}
         <iframe 
@@ -63,13 +88,26 @@ export default function Home() {
             width: '100vw',
             height: '100vh',
             zIndex: -2,
-            display: isLoading ? 'block' : 'none'
+            display: isLoading ? 'none' : 'block'
+          }}
+          onLoad={() => {
+            console.log('Fallback iframe loaded');
+            setIsLoading(false);
           }}
         ></iframe>
       </div>
 
+      {/* Loading Overlay */}
+      {isLoading && (
+        <div className="loading-overlay">
+          <div className="rolling-loader">
+            <div className="rolling-circle"></div>
+          </div>
+        </div>
+      )}
+
       {/* Overlay Content */}
-      <div className="overlay">
+      <div className="overlay" style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease' }}>
         <h1 className="gradient-text" aria-label="Aryanshh Srivastava">
           Aryanshh Srivastava
         </h1>
@@ -147,6 +185,8 @@ export default function Home() {
         .resume-button:active {
           transform: translateY(0);
         }
+        
+        /* Loading Overlay Styles */
         .loading-overlay {
           position: fixed;
           top: 0;
@@ -156,19 +196,38 @@ export default function Home() {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #000;
+          background: rgba(0, 0, 0, 0.85);
           z-index: 10;
+          backdrop-filter: blur(5px);
         }
-        .loading-spinner {
-          width: 50px;
-          height: 50px;
-          border: 5px solid rgba(113, 88, 226, 0.2);
+        
+        /* Rolling Loader */
+        .rolling-loader {
+          width: 80px;
+          height: 80px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        .rolling-circle {
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
-          border-top-color: #7158e2;
-          animation: spin 1s ease-in-out infinite;
+          border: 3px solid transparent;
+          border-top: 3px solid white;
+          border-right: 3px solid white;
+          animation: roll 1.2s cubic-bezier(0.5, 0.2, 0.5, 0.8) infinite;
         }
-        @keyframes spin {
-          to { transform: rotate(360deg); }
+        
+        /* Animation */
+        @keyframes roll {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
         }
       `}</style>
 
