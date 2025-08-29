@@ -43,14 +43,9 @@ export default function Home() {
     setIsLoading(false);
   };
 
-  const handleDownloadResume = () => {
-    const resumeUrl = '/resume.pdf';
-    const link = document.createElement('a');
-    link.href = resumeUrl;
-    link.download = 'Aryanshh_Srivastava_Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleViewResume = () => {
+    // Open the Google Drive link in a new tab
+    window.open('https://drive.google.com/file/d/1zDSk557miBrd_ofi0NXHG0R2iUz5GLBN/view?usp=sharing', '_blank');
   };
 
   return (
@@ -119,10 +114,10 @@ export default function Home() {
         </p>
         <button 
           className="resume-button" 
-          onClick={handleDownloadResume}
-          aria-label="Download Resume"
+          onClick={handleViewResume}
+          aria-label="View Resume"
         >
-          Download Resume
+          View Resume
         </button>
       </div>
 
